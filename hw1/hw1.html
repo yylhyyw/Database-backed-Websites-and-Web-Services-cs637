@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+        <title>Assignment 1<br>Yiwei Yao</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+        <link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        
+        <script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+    </head>
+    <body>
+        <h4 id="assignment-1bryiwei-yao">Assignment 1<br>Yiwei Yao</h4>
+<ol>
+<li>
+<p>a. I know HTML very well, so I skip it.<br>
+b. HTTP request to <a href="http://www.cs.umb.edu/cs637/hw1.html:">www.cs.umb.edu/cs637/hw1.html:</a></p>
+<pre><code><div>GET /cs637/hw1.html HTTP/1.1  
+Host: www.cs.umb.edu
+</div></code></pre>
+<p>HTTP response from <a href="http://www.cs.umb.edu/cs637/hw1.html:">www.cs.umb.edu/cs637/hw1.html:</a></p>
+<pre><code><div>HTTP/1.1 200 OK
+Date: Fri, 13 Sep 2019 16:45:42 GMT
+Server: Apache/2.4.18 (Ubuntu) OpenSSL/1.0.2g mod_wsgi/4.3.0 Python/2.7.12
+
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+        &lt;meta name=&quot;generator&quot; content=&quot;HTML Tidy for Windows (vers 25 March 2009), see www.w3.org&quot;&gt;
+        &lt;title&gt;CS637 hw1&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+    ***
+    ***
+    ***
+    &lt;/body&gt;
+&lt;/html&gt;
+</div></code></pre>
+</li>
+<li>
+<p>1-4:</p>
+<pre><code><div> SELECT winner
+ FROM nobel
+ WHERE  yr&gt;= 2000
+     AND subject = 'Peace'
+</div></code></pre>
+<p>1-7:</p>
+<pre><code><div>SELECT winner
+FROM nobel
+WHERE winner LIKE 'john%'
+</div></code></pre>
+<p>2-2:</p>
+<pre><code><div>SELECT NAME 
+FROM   world 
+WHERE  gdp / population &gt; (SELECT gdp / population 
+                            FROM world 
+                            WHERE NAME = 'United Kingdom') 
+   AND continent = 'Europe' 
+</div></code></pre>
+<p>2-4:</p>
+<pre><code><div>SELECT name, population
+FROM   world
+WHERE  population &gt; (SELECT population
+                        FROM   world
+                        WHERE  name = 'Canada')
+    AND population &lt; (SELECT population
+                        FROM   world
+                        WHERE  name = 'Poland')
+</div></code></pre>
+<p>2-6:</p>
+<pre><code><div>SELECT name FROM world
+WHERE gdp &gt; ALL(
+	SELECT gdp FROM world
+		WHERE continent = 'Europe' AND
+			gdp IS NOT NULL
+)
+</div></code></pre>
+<p>3-2:</p>
+<pre><code><div>SELECT DISTINCT continent
+FROM world
+</div></code></pre>
+<p>3-4:</p>
+<pre><code><div>SELECT Count(name)
+FROM world
+WHERE area &gt;= 1000000
+</div></code></pre>
+<p>3-6:</p>
+<pre><code><div>SELECT continent , Count(name) FROM world GROUP BY continent
+</div></code></pre>
+<p>4-3:</p>
+<pre><code><div>SELECT id, title, yr FROM movie
+WHERE title LIKE '%Star Trek%'
+ORDER BY yr
+</div></code></pre>
+<p>4-6:</p>
+<pre><code><div>SELECT name
+FROM   actor
+    join casting
+        ON actor.id = casting.actorid
+    join movie
+        ON movie.id = casting.movieid
+WHERE  casting.movieid = 11768 
+</div></code></pre>
+<p>4-7:</p>
+<pre><code><div>SELECT name
+FROM   actor
+    join casting
+        ON actor.id = casting.actorid
+    join movie
+        ON movie.id = casting.movieid
+WHERE  movie.title = 'Alien' 
+</div></code></pre>
+<p>4-9:</p>
+<pre><code><div>SELECT title
+FROM   movie
+WHERE  id IN (SELECT movieid
+            FROM   actor
+                    join casting
+                    ON ( id = actorid )
+            WHERE  name = 'Harrison Ford'
+                    AND ord != 1) 
+</div></code></pre>
+</li>
+<li>
+<p>a. Script:</p>
+<pre><code><div>Script started on Sun 15 Sep 2019 09:24:34 PM EDT
+ yiweiyao@topcat:~/cs637$ mysql -u yiweiyao -o[Kp
+ Enter password: 
+ Welcome to the MySQL monitor.  Commands end with ; or \g.
+ Your MySQL connection id is 4602
+ Server version: 5.6.33-0ubuntu0.14.04.1 (Ubuntu)
+
+ Copyright (c) 2000, 2016, Oracle and/or its affiliates. All rights reserved.
+
+ Oracle is a registered trademark of Oracle Corporation and/or its
+ affiliates. Other names may be trademarks of their respective
+ owners.
+
+ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+ mysql&gt; use yiweiyaodb
+ Database changed
+ mysql&gt; CREATE TAN[KBLE t1 (id INT , message VARCHAR(40));
+ Query OK, 0 rows affected (0.37 sec)
+
+ mysql&gt; INSERT INTO TABL[K[K[K[Kt1 (1, [K[K[KVALUES(1, fi[K[K'first  row ');
+ Query OK, 1 row affected (0.06 sec)
+
+ mysql&gt; INSERT INTO t1 VALUES(2, 'second row ');
+ Query OK, 1 row affected (0.06 sec)
+
+ mysql&gt; SELECT * FROM t1[K[Kt1
+     -&gt; ;
+ +------+------------+
+ | id   | message    |
+ +------+------------+
+ |    1 | first row  |
+ |    2 | second row |
+ +------+------------+
+ 2 rows in set (0.00 sec)
+
+ mysql&gt; exit
+ Bye
+ yiweiyao@topcat:~/cs637$ exit
+ exit
+
+ Script done on Sun 15 Sep 2019 09:26:53 PM EDT
+</div></code></pre>
+<p>b.  I have loaded your mysql database on topcat with the script successfully. Here is my script:</p>
+<pre><code><div>Script started on Sun 15 Sep 2019 09:38:27 PM EDT
+yiweiyao@topcat:~/cs637/hw1$ mysql -u yiweiyao -p
+Enter password: 
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 4606
+Server version: 5.6.33-0ubuntu0.14.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2016, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql&gt; source my[K[Kmy_guitar_shop1.sql [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K my_guitar_shop1.sql;
+Database changed
+Query OK, 0 rows affected (0.34 sec)
+
+Query OK, 0 rows affected (0.37 sec)
+
+Query OK, 0 rows affected (0.29 sec)
+
+Query OK, 3 rows affected (0.09 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+Query OK, 10 rows affected (0.16 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql&gt; exit
+Bye
+yiweiyao@topcat:~/cs637/hw1$ exit
+exit
+
+Script done on Sun 15 Sep 2019 09:39:14 PM EDT
+</div></code></pre>
+</li>
+<li>
+<p>a. Here is my program:</p>
+<pre><code><div> &lt;?php
+     $investment = 1000;
+     $interest_rate = .1;
+     $years = 25;
+     $future_value = $investment;
+
+     for ($i = 1; $i &lt;= $years; $i++) {
+         $future_value = ( $future_value + ($future_value * $interest_rate)); 
+     }
+
+     echo &quot;future value: &quot;.$future_value;
+ ?&gt;
+</div></code></pre>
+<p>I have run it successfully. Here is my result:</p>
+<pre><code><div>Script started on Mon 16 Sep 2019 11:51:55 AM EDT
+yiweiyao@topcat:~/cs637/hw1$ php future_value.php 
+future value: 10834.705943388
+
+yiweiyao@topcat:~/cs637/hw1$ exit
+exit
+
+Script done on Mon 16 Sep 2019 11:52:06 AM EDT
+</div></code></pre>
+<p>b. By changing the variable <code>$error_message</code> in the following code block, it can display a different error message. for example</p>
+<pre><code><div>    11     if ($investment === FALSE ) {
+    12         $error_message = 'Please reenter a vaild number at Investment filed.';
+    13     }
+</div></code></pre>
+<p>Now if a user does not enter a number at Investment filed, it will display a new error message 'Please reenter a valid number at Investment filed' rather than 'Investment must be a valid number.'</p>
+</li>
+<li>
+<p>I have set up my DevelopmentSetup successfully and no problems encountered.</p>
+</li>
+</ol>
+
+    </body>
+    </html>

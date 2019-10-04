@@ -1,0 +1,42 @@
+Script started on Sun 15 Sep 2019 09:24:34 PM EDT
+yiweiyao@topcat:~/cs637$ mysql -u yiweiyao -o[Kp
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 4602
+Server version: 5.6.33-0ubuntu0.14.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2016, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use yiweiyaodb
+Database changed
+mysql> CREATE TAN[KBLE t1 (id INT , message VARCHAR(40));
+Query OK, 0 rows affected (0.37 sec)
+
+mysql> INSERT INTO TABL[K[K[K[Kt1 (1, [K[K[KVALUES(1, fi[K[K'first  row ');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> INSERT INTO t1 VALUES(2, 'second row ');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> SELECT * FROM t1[K[Kt1
+    -> ;
++------+------------+
+| id   | message    |
++------+------------+
+|    1 | first row  |
+|    2 | second row |
++------+------------+
+2 rows in set (0.00 sec)
+
+mysql> exit
+Bye
+yiweiyao@topcat:~/cs637$ exit
+exit
+
+Script done on Sun 15 Sep 2019 09:26:53 PM EDT
