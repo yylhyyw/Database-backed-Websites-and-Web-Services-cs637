@@ -1,0 +1,95 @@
+MariaDB [pizzadb]> source showdb.sql
++---------------+
+| menu_toppings |
++---------------+
+| menu_toppings |
++---------------+
+1 row in set (0.000 sec)
+
++----+-----------+---------+
+| id | topping   | is_meat |
++----+-----------+---------+
+|  1 | Pepperoni |       1 |
+|  2 | Onions    |       0 |
++----+-----------+---------+
+2 rows in set (0.012 sec)
+
++------------+
+| menu_sizes |
++------------+
+| menu_sizes |
++------------+
+1 row in set (0.001 sec)
+
++----+-------+----------+
+| id | size  | diameter |
++----+-------+----------+
+|  1 | Small |       12 |
+|  2 | Large |       16 |
++----+-------+----------+
+2 rows in set (0.008 sec)
+
++------------+
+| shop_users |
++------------+
+| shop_users |
++------------+
+1 row in set (0.000 sec)
+
++----+----------+------+
+| id | username | room |
++----+----------+------+
+|  1 | joe      |    6 |
+|  2 | sue      |    3 |
++----+----------+------+
+2 rows in set (0.006 sec)
+
++--------------+
+| pizza_orders |
++--------------+
+| pizza_orders |
++--------------+
+1 row in set (0.000 sec)
+
+Empty set (0.002 sec)
+
++---------------+
+| order_topping |
++---------------+
+| order_topping |
++---------------+
+1 row in set (0.000 sec)
+
+Empty set (0.002 sec)
+
++---------------+
+| status_values |
++---------------+
+| status_values |
++---------------+
+1 row in set (0.000 sec)
+
++--------------+
+| status_value |
++--------------+
+| Baked        |
+| Finished     |
+| Preparing    |
++--------------+
+3 rows in set (0.003 sec)
+
++---------------+
+| pizza_sys_tab |
++---------------+
+| pizza_sys_tab |
++---------------+
+1 row in set (0.000 sec)
+
++-------------+
+| current_day |
++-------------+
+|           1 |
++-------------+
+1 row in set (0.003 sec)
+
+MariaDB [pizzadb]> 
