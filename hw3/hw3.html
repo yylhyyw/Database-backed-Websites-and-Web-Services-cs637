@@ -285,6 +285,233 @@ pre[data-line] .line-highlight[data-end]:after {
 <h2><img src="Communications_Diagram.jpg" alt="Communications_Diagram"></h2>
 <h4 class="mume-header" id="4">4.</h4>
 
+<ul>
+<li>a:
+<ul>
+<li>Customers.shipAddressID is a foreign key of addresses.addressID</li>
+<li>Customers.billingAddressID is a foreign key of addresses.addressID</li>
+<li>addresses.customerID is a foreign key of customers.customerID</li>
+<li>orders.customerID is a foreign key of customers.customerID</li>
+<li>orders.shipAddressID is a foreign key of addresses.addressID</li>
+<li>orders.billingAddressID is a foreign key of addresses.addressID</li>
+<li>orderItems.orderID is a foreign key of orders.orderID</li>
+<li>orderItems.productID is a foreign key of products.productID</li>
+<li>products.categoryID is a foreign key of categories.categoryID</li>
+</ul>
+</li>
+<li>b:
+<ul>
+<li>orders and orderItems: N-1(orderItems side is the &quot;many&quot; side, and orderItems.orderID expresses the relationship.)</li>
+<li>orders and customers : N-1(orders side is the &quot;many&quot; side, and orders.customerID expresses the relationship.)</li>
+<li>orders and products: N-N</li>
+<li>products and categories: N-1(products side is the &quot;many&quot; side, and products.categoryID expresses the relationship.)</li>
+<li>customers and addresses: N-1(addresses side is the &quot;many&quot; side, and addresses.customerID expresses the relationship.)</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 class="mume-header" id="5">5.</h4>
+
+<ul>
+<li>a: query: <code>SELECT `customerID` FROM `customers` WHERE `emailAddress` LIKE &apos;%@gmail.com&apos;;</code> <br><br>
+Results:
+<table>
+<thead>
+<tr>
+<th>customerID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>b. query: <code>SELECT * FROM `orderitems` WHERE `orderID` = 2;</code><br>
+Results:
+<table>
+<thead>
+<tr>
+<th>itemID</th>
+<th>orderID</th>
+<th>productID</th>
+<th>itemPrice</th>
+<th>discountAmount</th>
+<th>quantity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>4</td>
+<td>699.00</td>
+<td>69.90</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>c. query: <code>SELECT orders.orderID, orders.orderDate FROM orders INNER JOIN customers ON orders.customerID = customers.customerID WHERE customers.emailAddress = &apos;christineb@solarone.com&apos;;</code><br>
+No result.</li>
+<li>d. query: <code>SELECT orderitems.productID FROM orderitems INNER JOIN orders ON orderitems.orderID = orders.orderID INNER JOIN customers ON customers.customerID = orders.customerID WHERE customers.emailAddress = &apos;barryz@gmail.com&apos;;</code><br>
+No result.</li>
+<li>e. query: <code>SELECT DISTINCT products.productID FROM products INNER JOIN orderitems ON orderitems.productID = products.productID INNER JOIN orders ON orders.orderID = orderitems.orderID WHERE orders.orderDate &gt; products.dateAdded;</code><br>
+Results:
+<table>
+<thead>
+<tr>
+<th>productID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+</tr>
+<tr>
+<td>4</td>
+</tr>
+<tr>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>f. query: <code>SELECT products.productID, products.categoryID, products.productCode, products.productName, products.description, products.listPrice,products.discountPercent, products.dateAdded FROM products INNER JOIN orderitems ON orderitems.productID=products.productID GROUP BY products.productID ORDER BY COUNT(*) DESC LIMIT 1&#xFF1B;</code><br>
+Results:
+<table>
+<thead>
+<tr>
+<th>productID</th>
+<th>categoryID</th>
+<th>productCode</th>
+<th>productName</th>
+<th>description</th>
+<th>listPrice</th>
+<th>discountPercent</th>
+<th>dateAdded</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>les_paul</td>
+<td>Gibson Les Paul</td>
+<td>This Les Paul guitar offers a carved top and humbu...</td>
+<td>1199.00</td>
+<td>30.00</td>
+<td>2013-12-05 16:33:13</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<hr>
+<h4 class="mume-header" id="6">6.</h4>
+
+<ul>
+<li>a. Redisplay the hoem page: <img src="p6-1.jpg" alt="p6-1"></li>
+<li>b. The resulting output of showdb.sql:<pre data-role="codeBlock" data-info class="language-"><code>MariaDB [pizzadb]&gt; source showdb.sql
++---------------+
+| menu_toppings |
++---------------+
+| menu_toppings |
++---------------+
+1 row in set (0.000 sec)
+
++----+-----------+---------+
+| id | topping   | is_meat |
++----+-----------+---------+
+|  1 | Pepperoni |       1 |
+|  2 | Onions    |       0 |
++----+-----------+---------+
+2 rows in set (0.012 sec)
+
++------------+
+| menu_sizes |
++------------+
+| menu_sizes |
++------------+
+1 row in set (0.001 sec)
+
++----+-------+----------+
+| id | size  | diameter |
++----+-------+----------+
+|  1 | Small |       12 |
+|  2 | Large |       16 |
++----+-------+----------+
+2 rows in set (0.008 sec)
+
++------------+
+| shop_users |
++------------+
+| shop_users |
++------------+
+1 row in set (0.000 sec)
+
++----+----------+------+
+| id | username | room |
++----+----------+------+
+|  1 | joe      |    6 |
+|  2 | sue      |    3 |
++----+----------+------+
+2 rows in set (0.006 sec)
+
++--------------+
+| pizza_orders |
++--------------+
+| pizza_orders |
++--------------+
+1 row in set (0.000 sec)
+
+Empty set (0.002 sec)
+
++---------------+
+| order_topping |
++---------------+
+| order_topping |
++---------------+
+1 row in set (0.000 sec)
+
+Empty set (0.002 sec)
+
++---------------+
+| status_values |
++---------------+
+| status_values |
++---------------+
+1 row in set (0.000 sec)
+
++--------------+
+| status_value |
++--------------+
+| Baked        |
+| Finished     |
+| Preparing    |
++--------------+
+3 rows in set (0.003 sec)
+
++---------------+
+| pizza_sys_tab |
++---------------+
+| pizza_sys_tab |
++---------------+
+1 row in set (0.000 sec)
+
++-------------+
+| current_day |
++-------------+
+|           1 |
++-------------+
+1 row in set (0.003 sec)
+
+MariaDB [pizzadb]&gt; 
+</code></pre></li>
+<li>c. Success.</li>
+<li>d. success.</li>
+</ul>
 
       </div>
       
